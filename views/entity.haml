@@ -1,0 +1,65 @@
+.panel.panel-primary
+  .panel-heading
+    %h3.panel-title Entity
+  .panel-body
+    .txa-c
+      %img.img-responsive{ :src => @image_url || DefaultEntityImage}
+
+    .d-fx.fxai-c.fxw-w.fxjc-c.fxg-1
+      .d-fx.fxai-c.p-10px
+        = haml :"_social_links", :locals => {:obj => @social_links}
+
+    .txa-c
+      %a{ :href => @entity.url, :target => "_blank" }
+        = "#{@entity.name} at GruenderSzene"
+      - if addr = @entity.data["Adresse:"]
+        %ul.no-bullet-point
+          %li
+            %span= addr
+
+- if @investments.count == 0
+  .panel.panel-primary
+    .panel-heading
+      %h3.panel-title No Investments
+- else
+  .panel.panel-primary
+    .panel-heading
+      %h3.panel-title Investments
+    .panel-body
+      = haml :"_js_tablesorter", :locals => {:tableid => "invtable" }
+      %table#invtable.w-100p.colorit.tablesorter
+        %thead
+          %tr
+            %th.txa-l Invested In
+            %th.txa-c Stake
+            %th.txa-c Offers
+        %tbody
+          - @investments.each do |inv|
+            %tr
+              %td
+                %a{ :href => "/startups/#{inv.startup_id}" }= inv.startup.name
+              %td.txa-c= succeed("%") { inv.stake_percent }
+              %td.txa-c
+                = haml :"_offer_count", :locals => { :obj => inv }
+
+- if @key_employments.count == 0
+  .panel.panel-primary
+    .panel-heading
+      %h3.panel-title No Key Employments
+- else
+  .panel.panel-primary
+    .panel-heading
+      %h3.panel-title Key Employments
+    .panel-body
+      = haml :"_js_tablesorter", :locals => {:tableid => "empltable" }
+      %table#empltable.w-100p.colorit.tablesorter
+        %thead
+          %tr
+            %th.txa-l Key Employee at
+            %th.txa-l Role
+        %tbody
+          - @key_employments.each do |empl|
+            %tr
+              %td
+                %a{ :href => "/startups/#{empl.startup_id}" }= empl.startup.name
+              %td= empl.role

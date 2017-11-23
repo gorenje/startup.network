@@ -1,0 +1,77 @@
+.panel.panel-primary
+  .panel-heading
+    %h3.panel-title Startup
+  .panel-body
+    .txa-c
+      %img.img-responsive{ :src => @startup.logo_url }
+
+    .txa-c
+      %a{ :href => @startup.url, :target => "_blank" }
+        = "#{@startup.name} at GruenderSzene"
+
+    .d-fx.fxai-c.fxw-w.fxjc-c.fxg-1
+      .d-fx.fxai-c.p-10px
+        = haml :"_social_links", :locals => {:obj => @startup}
+
+    %ul.no-bullet-point
+      - unless @startup.data["founded"].empty?
+        %li
+          %span.fw-900 Founded:
+          = @startup.data["founded"]
+      - unless @startup.data["company_name"].empty?
+        %li
+          %span.fw-900 Company:
+          = @startup.data["company_name"]
+      %li.fw-900= @startup.sector
+      %li= @startup.description.strip
+
+      %li.mt-5px= @startup.location.data["addresse"]
+      %li= @startup.location.phone
+
+
+- if @startup.investments.count == 0
+  .panel.panel-primary
+    .panel-heading
+      %h3.panel-title No Investors
+- else
+  .panel.panel-primary
+    .panel-heading
+      %h3.panel-title Investors
+    .panel-body
+      = haml :"_js_tablesorter", :locals => {:tableid => "invtable" }
+      %table#invtable.w-100p.colorit.tablesorter
+        %thead
+          %tr
+            %th.txa-l Name
+            %th.txa-c Stake
+            %th.txa-c Offers
+        %tbody
+          - @startup.investments.each do |investment|
+            %tr
+              %td
+                %a{:href => "/entities/#{investment.entity_id}"}= investment.entity.name
+              %td.txa-c= succeed("%") { investment.stake_percent }
+              %td.txa-c
+                = haml :"_offer_count", :locals => { :obj => investment }
+
+- if @startup.key_employees.count == 0
+  .panel.panel-primary
+    .panel-heading
+      %h3.panel-title No Key Employees
+- else
+  .panel.panel-primary
+    .panel-heading
+      %h3.panel-title Key Employees
+    .panel-body
+      = haml :"_js_tablesorter", :locals => {:tableid => "empltable" }
+      %table#empltable.w-100p.colorit.tablesorter
+        %thead
+          %tr
+            %th.txa-l Name
+            %th.txa-l Role
+        %tbody
+          - @startup.key_employees.each do |empl|
+            %tr
+              %td
+                %a{:href => "/entities/#{empl.entity_id}"}= empl.entity.name
+              %td= empl.role

@@ -1,0 +1,22 @@
+.panel.panel-primary
+  .panel-heading
+    %h3.panel-title Stake
+  .panel-body
+    .row
+      .col-md-6.fw-900
+        Startup
+    .row
+      .col-md-6
+        %a{ :href => "/startups/#{investment.startup_id}" }= investment.startup.name
+    .row.pt-10px
+      .col-md-6.fw-900
+        Investor
+    .row
+      .col-md-6
+        %a{ :href => "/entities/#{investment.entity_id}" }= investment.entity.name
+    .row.pt-10px
+      .col-md-6.fw-900
+        Stake
+    .row
+      .col-md-6
+        = succeed("%") { investment.stake_percent }

@@ -1,0 +1,16 @@
+- if url = obj.data["email"]
+  %a.m-5px.brad-100p.bgc-tan.d-fx.fxai-c.fxjc-c.c-white.w-25px.h-25px.bs-1{"data-icon" => "email2", :href => "mailto:#{url}", :title => "Send Email" }
+- if url = obj.data["profile-website"]
+  - if url.strip.empty?
+    - url = "https://google.com/search?q=#{obj.name}"
+  %a.m-5px.brad-100p.bgc-tan.d-fx.fxai-c.fxjc-c.c-white.w-25px.h-25px.bs-1{"data-icon" => "link4", :href => url, :target => "_blank", :title => "Website" }
+- if url = obj.data["socials-facebook"]
+  %a.m-5px.brad-100p.bgc-tan.d-fx.fxai-c.fxjc-c.c-white.w-25px.h-25px.bs-1{"data-icon" => "facebook4", :href => url, :target => "_blank", :title => "Facebook" }
+- if url = obj.data["socials-linkedin"]
+  %a.m-5px.brad-100p.bgc-tan.d-fx.fxai-c.fxjc-c.c-white.w-25px.h-25px.bs-1{"data-icon" => "linkedin2", :href => url, :target => "_blank", :title => "LinkedIn" }
+- if url = obj.data["socials-xing"]
+  %a.m-5px.brad-100p.bgc-tan.d-fx.fxai-c.fxjc-c.c-white.w-25px.h-25px.bs-1{"data-icon" => "xing2", :href => url, :target => "_blank", :title => "Xing" }
+- if url = obj.data["socials-twitter"]
+  %a.m-5px.brad-100p.bgc-tan.d-fx.fxai-c.fxjc-c.c-white.w-25px.h-25px.bs-1{"data-icon" => "twitter", :href => url, :target => "_blank", :title => "Twitter" }
+- if url = obj.data["socials-googleplus"]
+  %a.m-5px.brad-100p.bgc-tan.d-fx.fxai-c.fxjc-c.c-white.w-25px.h-25px.bs-1{"data-icon" => "googleplus", :href => url, :target => "_blank", :title => "Google Plus" }

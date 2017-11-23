@@ -1,0 +1,56 @@
+= haml :"_response_panel"
+
+.panel.panel-primary
+  .panel-heading
+    %h3.panel-title Your Profile
+  .panel-body
+    %form{ :action => "/profile", :method => :post }
+      .row
+        .col-md-4
+          %img.avatar{ :height => 80, :src => @user.user_image_url }
+
+      .row.pt-10px
+        .col-md-12.fw-900 Name
+      .row
+        .col-md-12
+          %input{ :type => :text, :size => 60, :value => @user.name, :name => :username }
+
+      .row.pt-10px
+        .col-md-12.fw-900 Email
+      .row
+        .col-md-12
+          %input{ :type => :text, :size => 60, :value => @user.email, :disabled => true }
+
+      - unless @user.profile_links.empty?
+        .row.pt-10px
+          .col-md-12.fw-900 Associated Profiles
+        - @user.profile_links.each do |(provider,lnk)|
+          .row
+            .col-md-12
+              %a{ :href => lnk }= provider
+
+      .row.pt-10px
+        .col-md-12
+          %input.btn.btn-success{ :type => :submit, :value => "Update" }
+
+- unless (entities = @user.entities_by_profile_links).empty?
+  .panel.panel-primary
+    .panel-heading
+      %h3.panel-title Your Entities
+    .panel-body
+      - entities.in_groups_of(3).each do |ary|
+        .row
+          - ary.each do |entity|
+            .col-md-4
+              = haml :"_ppl_card", :locals => {:entity => entity}
+  :javascript
+    $(document).ready(function(){
+      $('.pplcard').click(function(){
+        var url = window.location.protocol + "//" + window.location.hostname +
+            ":" + window.location.port + "/entities/" + $(this).data("id");
+        window.location = url;
+      });
+    });
+
+= haml :"_offers_to_buy", :locals => { :offers => @offers_to_buy }
+= haml :"_offers_to_sell", :locals => { :offers => @offers_to_sell }

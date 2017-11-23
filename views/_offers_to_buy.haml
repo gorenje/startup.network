@@ -1,0 +1,32 @@
+.panel.panel-primary
+  .panel-heading
+    %h3.panel-title Offers to Purchase Holdings
+  - unless offers.empty?
+    .panel-body
+      = haml :"_js_tablesorter", :locals => {:tableid => "buytbl" }
+      %table#buytbl.w-100p.colorit.tablesorter
+        %thead
+          %tr
+            %th.txa-l Start-Up
+            %th.txa-l Buyer
+            %th.txa-l Owner
+            %th.txa-c Stake
+            %th.txa-c Amount
+            %th.txa-l Offer Made On
+            %th
+        %tbody
+          - offers.each do |ofr|
+            %tr
+              %td.txa-l
+                %a{ :href => "/startups/#{ofr.investment.startup_id}" }= ofr.investment.startup.name
+              %td.txa-l
+                %a{:href => "mailto:#{ofr.user.email}"}= ofr.user.email
+              %td.txa-l
+                %a{:href => "/entities/#{ofr.entity_id}"}= ofr.entity.name
+              %td.txa-c= succeed("%") { ofr.investment.stake_percent }
+              %td.txa-c= currency(ofr.amount, :unit => "&euro;")
+              %td.txa-l
+                .d-fx.fxai-s.fxw-w.fxjc-s.fxg-1
+                  .d-fx.fxai-l
+                    %span.mr-5px= ofr.created_at.to_date
+                    = haml :"_offer_actions", :locals => { :ofr => ofr, :user => @user }

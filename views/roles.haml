@@ -1,0 +1,16 @@
+.panel.panel-primary
+  .panel-heading
+    %h3.panel-title Roles
+  .panel-body
+    = haml :"_js_tablesorter", :locals => {:tableid => "roletable" }
+    %table#roletable.colorit.tablesorter
+      %thead
+        %tr
+          %th.txa-l Role
+          %th.txa-c Number of Startups
+      %tbody
+        - @roles.each do |role_name, cnt|
+          %tr
+            %td
+              %a{ :href => "/role/#{role_name}" }= role_name.upcase
+            %td.txa-c= cnt

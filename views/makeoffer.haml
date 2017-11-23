@@ -1,0 +1,19 @@
+= haml :"_investment_panel", :locals => { :investment => @investment }
+
+.panel.panel-primary
+  .panel-heading
+    %h3.panel-title Make Offer To Sell
+  .panel-body
+    %form{ :action => "/makeoffer/#{@investment.id}/sell", :method => :post }
+      %input{ :type => :text, :placeholder => "Amount (Euro)", :name => :amount }
+      .break.pt-10px
+        %input.btn.btn-warning{ :type => :submit, :value => "Make Offer to Sell" }
+
+.panel.panel-primary
+  .panel-heading
+    %h3.panel-title Make Offer To Buy
+  .panel-body
+    %form{ :action => "/makeoffer/#{@investment.id}/buy", :method => :post }
+      %input{ :type => :text, :placeholder => "Amount (Euro)", :name => :amount }
+      .break.pt-10px
+        %input.btn.btn-warning{ :type => :submit, :value => "Make Offer to Buy" }

@@ -1,0 +1,25 @@
+%section.bgc-grey.fxg-1.d-fx.fxjc-c
+  %nav.p-20px.pl-50px.pr-50px.d-fx.fxd-v.fsz-16px.fw-600.max-w-500px.fxg-1.fxai-s
+    %a.brb-1px.lh-50px.mb-10px
+      Total Startups with
+      = params[:role_name]
+      = ":"
+      = @startups.count
+
+  .fxg-1.d-fx.fxw-w.fxjc-s.fxac-s.max-w-1000px.p-3px.fxd-v
+    - @startups.each do |startup|
+      .strtcard.bgc-white.w-90p.h-180px.p-5px.m-5px.bs-1.brad-2px{ :data => { :id => startup.id } }
+        .txa-c
+          %img.h-100px{ :src => startup.logo_url }
+        %ul.no-bullet-point
+          %li.fw-900= startup.name
+          %li.fw-400= startup.sector
+
+:javascript
+  $(document).ready(function(){
+    $('.strtcard').click(function(){
+      var url = window.location.protocol + "//" + window.location.hostname +
+          ":" + window.location.port + "/startups/" + $(this).data("id");
+      window.location = url;
+    });
+  });

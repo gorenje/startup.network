@@ -1,0 +1,24 @@
+.panel.panel-primary
+  .panel-heading
+    .row
+      .col-md-6
+        %h3.panel-title
+          Random Selection of Companies and People
+      .col-md-6
+        .pull-right
+          %a.td-n.brad-100p.bgc-silver.d-fx.fxai-c.fxjc-c.c-white.w-30px.h-30px.bs-1.fsz-20px{"data-icon" => "refresh", :title => "Refresh list", :href => "/entities"  }
+  .panel-body
+    - @entities.in_groups_of(3).each do |ary|
+      .row
+        - ary.each do |entity|
+          .col-md-4
+            = haml :"_ppl_card", :locals => {:entity => entity}
+
+:javascript
+  $(document).ready(function(){
+    $('.pplcard').click(function(){
+      var url = window.location.protocol + "//" + window.location.hostname +
+          ":" + window.location.port + "/entities/" + $(this).data("id");
+      window.location = url;
+    });
+  });

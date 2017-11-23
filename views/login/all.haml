@@ -1,0 +1,13 @@
+= haml :"_response_panel"
+
+.panel.panel-primary
+  .panel-heading
+    %h3.panel-title
+      Authenticate with
+      %span.fw-600= LoginProviders[@provider].first
+  .panel-body.txa-c
+    %form{ :action => "/login/#{@provider}", :method => :post }
+      .break.p-5px
+        %input{ :name => :url, :type => :text, :placeholder => "Profile URL" }
+      .break.p-5px
+        %input.btn.btn-warning{ :name => :submit, :type => :submit, :value => "Authenticate" }

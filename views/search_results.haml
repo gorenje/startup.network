@@ -1,0 +1,59 @@
+.panel.panel-primary
+  .panel-heading
+    %h3.panel-title Search Results
+  .panel-body
+    Search Results for
+    %span.fw-900= params[:term]
+    %p
+    = haml :"_search_form"
+
+- invcnt = @investors.count
+.panel.panel-primary
+  .panel-heading
+    %h3.panel-title= "Investors: #{invcnt}"
+  - unless invcnt == 0
+    .panel-body
+      = haml :"_js_tablesorter", :locals => {:tableid => "invtbl" }
+      %table#invtbl.w-100p.colorit.tablesorter
+        %thead
+          %tr
+            %th Name
+        %tbody
+          - @investors.sort_by(&:name).each do |inv|
+            %tr
+              %td
+                %a{:href => "/entities/#{inv.id}"}= inv.name
+
+- emplcnt = @employees.count
+.panel.panel-primary
+  .panel-heading
+    %h3.panel-title= "Employees: #{emplcnt}"
+  - unless emplcnt == 0
+    .panel-body
+      = haml :"_js_tablesorter", :locals => {:tableid => "empltable" }
+      %table#empltable.w-100p.colorit.tablesorter
+        %thead
+          %tr
+            %th Name
+        %tbody
+          - @employees.sort_by(&:name).each do |empl|
+            %tr
+              %td
+                %a{:href => "/entities/#{empl.id}"}= empl.name
+
+- stupcnt = @startups.count
+.panel.panel-primary
+  .panel-heading
+    %h3.panel-title= "Startups: #{stupcnt}"
+  - unless stupcnt == 0
+    .panel-body
+      = haml :"_js_tablesorter", :locals => {:tableid => "srtuptbl" }
+      %table#srtuptbl.w-100p.colorit.tablesorter
+        %thead
+          %tr
+            %th Name
+        %tbody
+          - @startups.sort_by(&:name).each do |startup|
+            %tr
+              %td
+                %a{:href => "/startups/#{startup.id}"}= startup.name

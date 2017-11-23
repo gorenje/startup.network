@@ -1,0 +1,104 @@
+{
+  "name": "Startup Network",
+  "description": "Platform for trading startup options.",
+  "keywords": ["startups","trading","options","platform"],
+  "repository": "https://github.com/gorenje/srtupnet",
+  "env": {
+    "RACK_ENV": {
+      "description": "Rack environment",
+      "value": "production"
+    },
+    "PORT": {
+      "description": "Web port for local testing, delete on heroku.",
+      "value": "3000"
+    },
+    "COOKIE_SECRET": {
+      "description": "Secret for the cookie storage",
+      "generator": "secret"
+    },
+    "PASSWORD_PEPPER": {
+      "description": "Pepper spice in the password hashing",
+      "generator": "secret"
+    },
+    "DATABASE_URL": {
+      "description": "Database URL set by Heroku when using Postgres",
+      "required": true
+    },
+    "CRED_KEY_BASE64": {
+      "description": "Used for encrypting sensitive data before storing in database. See Readme.",
+      "required": true
+    },
+    "CRED_IV_BASE64": {
+      "description": "Used for encrypting sensitive data before storing in database. See Readme.",
+      "required": true
+    },
+    "RSA_PRIVATE_KEY": {
+      "description": "Decrypt sensitive data sent from the client. See Readme.",
+      "required": true
+    },
+    "RSA_PUBLIC_KEY": {
+      "description": "Encrypt sensitive data sent from the client. See Readme.",
+      "required": true
+    },
+    "MANDRILL_API_KEY": {
+      "description": "Mandrill API Key to send emails.",
+      "required": true
+    },
+    "LOGIN_HOST": {
+      "description": "Login host, usual the same as the dashboard",
+      "value": "localhost:3000"
+    },
+    "GITHUB_KEY": {
+      "description": "Oauth2 Key",
+      "required": false
+    },
+    "GITHUB_SECRET": {
+      "description": "Oauth2 Secrete",
+      "required": false
+    },
+    "XING_KEY": {
+      "description": "Oauth2 Key",
+      "required": false
+    },
+    "XING_SECRET": {
+      "description": "Oauth2 Secrete",
+      "required": false
+    },
+    "FACEBOOK_KEY": {
+      "description": "Oauth2 Key",
+      "required": false
+    },
+    "FACEBOOK_SECRET": {
+      "description": "Oauth2 Secrete",
+      "required": false
+    },
+    "GOOGLE_OAUTH2_KEY": {
+      "description": "Oauth2 Key",
+      "required": false
+    },
+    "GOOGLE_OAUTH2_SECRET": {
+      "description": "Oauth2 Secrete",
+      "required": false
+    },
+    "TWITTER_KEY": {
+      "description": "Oauth2 Key",
+      "required": false
+    },
+    "TWITTER_SECRET": {
+      "description": "Oauth2 Secrete",
+      "required": false
+    },
+    "LINKEDIN_KEY": {
+      "description": "Oauth2 Key",
+      "required": false
+    },
+    "LINKEDIN_SECRET": {
+      "description": "Oauth2 Secrete",
+      "required": false
+    },
+    "HOSTS_WITH_NO_SSL": {
+      "description": "Comma-separated-list of hosts that do not use SSL.",
+      "value": "localhost"
+    }
+  }
+}

@@ -1,0 +1,11 @@
+= haml :"_response_panel"
+
+.panel.panel-primary
+  .panel-heading
+    %h3.panel-title Authenticate
+  .panel-body.txa-c
+    .d-fx.fxai-c.fxw-w.fxjc-c.fxg-1.p-10px
+      .d-fx.fxai-c
+        - LoginProviders.each do |provider, (name, icon, disabled)|
+          - next if disabled
+          %a.td-n.mr-5px.brad-100p.bgc-green-transparent-30p.d-fx.fxai-c.fxjc-c.c-white.w-60px.h-60px.bs-1.fsz-40px{"data-icon" => icon, :title => name, :href => "/login/#{provider}", :class => disabled ? "disabled" : ""}

@@ -1,0 +1,2 @@
+- (('A'..'Z').to_a + ["0-9"]).each do |char|
+  %a{ :href => "/sectors/#{char}", :class => @char.include?(char) ? "fw-900" : "" }= char

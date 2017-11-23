@@ -1,0 +1,20 @@
+.panel.panel-primary
+  .panel-heading
+    %h3.panel-title Investors with Most Investments
+  .panel-body
+    = haml :"_range_selector", :locals => {:path => "entities/mostinvestments"}
+    %hr
+    = haml :"_js_tablesorter", :locals => {:tableid => "invtble" }
+    %table#invtble.colorit.tablesorter
+      %thead
+        %tr
+          %th Investor
+          %th Investments
+      %tbody
+        - @mostinvestments.each do |hsh|
+          %tr
+            %td
+              %a{ :href => "/entities/#{hsh['id']}" }= hsh['name']
+            %td.txa-c= hsh['count']
+    %hr
+    = haml :"_range_selector", :locals => {:path => "entities/mostinvestments"}

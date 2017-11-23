@@ -1,0 +1,57 @@
+version: '2'
+services:
+  postgres:
+    image: postgres:9.6.6
+    restart: always
+    environment:
+      - POSTGRES_PASSWORD=nicesecret
+    ports:
+      - "5432:5432"
+    volumes:
+      - srtupnetdb:/var/lib/postgresql/data
+
+  srtupnet:
+    build: .
+    ports:
+      - "3002:3002"
+    command: "/bin/bash -c 'rake docker:pause_for_db      && \
+                            rake docker:if_db_is_migrated && \
+                            rake appjson:to_dotenv        && \
+                            foreman start web'"
+    links:
+      - postgres
+    environment:
+      - DATABASE_URL=postgres://postgres:nicesecret@postgres:5432/srtupnet
+      - PORT=3002
+      - LOGIN_HOST=localhost:3002
+      - DOCKER_ENV_STORE=/var/lib/srtupnet/env
+    volumes:
+      - srtupnetenv:/var/lib/srtupnet/env
+
+  srtupnet-migrate-db:
+    build: .
+    command: "/bin/bash -c 'rake docker:pause_for_db               && \
+                            rake docker:if_db_not_migrated         && \
+                            rake db:create                         && \
+                            rake docker:create_postgres_extensions && \
+                            rake db:migrate                        && \
+                            rake scrape:gruenderszene              && \
+                            rake scrape:update_entities            && \
+                            rake scrape:update_startups            && \
+                            rake social:update'"
+    links:
+      - postgres
+    environment:
+      - DATABASE_URL=postgres://postgres:nicesecret@postgres:5432/srtupnet
+      - PORT=3002
+
+networks:
+  default:
+    external:
+      name: srtupnet
+
+volumes:
+  srtupnetdb:
+    external: true
+  srtupnetenv:
+    external: true

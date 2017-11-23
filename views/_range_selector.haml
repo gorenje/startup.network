@@ -1,0 +1,2 @@
+- ['1','2','3','4','5', '6-10', '11-20', '21-30', '>30'].each do |char|
+  %a{ :href => "/#{path}/#{CGI::escape(char)}", :class => @char == char ? "fw-900" : "" }= char

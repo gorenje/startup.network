@@ -1,0 +1,20 @@
+.panel.panel-primary
+  .panel-heading
+    %h3.panel-title Sectors
+  .panel-body
+    = haml :"_sector_index"
+    %hr
+    = haml :"_js_tablesorter", :locals => {:tableid => "sectble" }
+    %table#sectble.colorit.tablesorter
+      %thead
+        %tr
+          %th Sector
+          %th Number of Startups
+      %tbody
+        - @sectors.each do |name, startups|
+          %tr
+            %td
+              %a{ :href => "/search?term=#{CGI::escape(name)}" }= name
+            %td= startups.count
+    %hr
+    = haml :"_sector_index"

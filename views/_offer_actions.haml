@@ -1,0 +1,6 @@
+- if ofr.user == user
+  %a.td-n.mr-5px.brad-100p.bgc-orange-transparent-30p.d-fx.fxai-c.fxjc-c.c-white.w-25px.h-25px.bs-1{"data-icon" => "hammer2", :title => "Change Offer", :href => "/offers/edit/#{ofr.id}" }
+  %a.td-n.mr-5px.brad-100p.bgc-red-transparent-30p.d-fx.fxai-c.fxjc-c.c-white.w-25px.h-25px.bs-1{"data-icon" => "close2", :title => "Counter Offer", :href => "/offers/delete/#{ofr.id}" }
+- else
+  %a.td-n.mr-5px.brad-100p.bgc-green-transparent-30p.d-fx.fxai-c.fxjc-c.c-white.w-25px.h-25px.bs-1{"data-icon" => "hammer2-horz", :title => "Accept Offer", :href => "/offers/accept/#{ofr.id}" }
+  %a.td-n.mr-5px.brad-100p.bgc-orange-transparent-30p.d-fx.fxai-c.fxjc-c.c-white.w-25px.h-25px.bs-1{"data-icon" => "hammer2", :title => "Counter Offer", :href => "/makeoffer/#{ofr.investment.id}" }

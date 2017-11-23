@@ -1,0 +1,20 @@
+= haml :"_investment_panel", :locals => { :investment => @offer.investment }
+
+- if Offer.is_a?(OfferToSell)
+  .panel.panel-primary
+    .panel-heading
+      %h3.panel-title Make Offer To Sell
+    .panel-body
+      %form{ :action => "/offers/edit/#{@offer.id}", :method => :post }
+        %input{ :type => :text, :placeholder => "Amount (Euro)", :name => :amount, :value => @offer.amount }
+        .break.pt-10px
+          %input.btn.btn-warning{ :type => :submit, :value => "Update Offer" }
+- else
+  .panel.panel-primary
+    .panel-heading
+      %h3.panel-title Make Offer To Buy
+    .panel-body
+      %form{ :action => "/offers/edit/#{@offer.id}", :method => :post }
+        %input{ :type => :text, :placeholder => "Amount (Euro)", :name => :amount, :value => @offer.amount }
+        .break.pt-10px
+          %input.btn.btn-warning{ :type => :submit, :value => "Update Offer" }
