@@ -12,7 +12,7 @@
     .txa-c
       %a{ :href => @entity.url, :target => "_blank" }
         = "#{@entity.name} at GruenderSzene"
-      - if addr = @entity.data["Adresse:"]
+      - if @entity.data && addr = @entity.data["Adresse:"]
         %ul.no-bullet-point
           %li
             %span= addr

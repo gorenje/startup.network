@@ -16,13 +16,10 @@ First install [Docker](https://docker.com) and then do:
     docker network create srtupnet
 
     docker-compose build
-    docker-compose up # first time to load data into database
-    docker-compose up # startup with a loaded database
+    docker-compose up
 
-The ```up``` command you will have to do a couple of times since the first
-time it initializes the database and loads the base data (this will take
-a longish amount of time). With the second ```up``` the website will come
-and will be accessible.
+The ```up``` command will always restart the web server. The migration server
+should not be restarted since this will only run we needed.
 
 Legal
 ---

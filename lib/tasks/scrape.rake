@@ -48,12 +48,15 @@ namespace :scrape do
       agent.user_agent_alias = 'Linux Mozilla'
     end
 
+    puts "Update startups, could take a while...."
+
     Startup.all.each do |startup|
       startup.update_from_url(agent) do |page, more_data|
         company_name = page.search("div.profile-additional-information").
           search("li").first.text
         more_data["company_name"] = company_name
       end rescue ""
+      print "."
     end
 
     Startup.all.select { |a| a.data.nil? }.each { |a| a.update(:data => {}) }
@@ -78,6 +81,8 @@ namespace :scrape do
       a.data["socials-xing"] = a.data["socials-xing"].sub(/;key/, "?key")
       a.save
     end
+
+    puts "done"
   end
 
   desc <<-EOF
@@ -88,7 +93,12 @@ namespace :scrape do
       agent.agent.http.verify_mode = OpenSSL::SSL::VERIFY_NONE
       agent.user_agent_alias = 'Linux Mozilla'
     end
-    Entity.all.each { |e| e.update_from_url(agent) rescue "" }
+
+    puts "Update entities, could take a while...."
+    Entity.all.each do |e|
+      e.update_from_url(agent) rescue nil
+      print "."
+    end
 
     Entity.all.select { |a| a.data.nil? }.each { |a| a.update(:data => {}) }
 
@@ -112,6 +122,7 @@ namespace :scrape do
       ent.data.delete("E‑Mail:")
       ent.save
     end
+    puts "done"
   end
 
   desc <<-EOF
@@ -123,7 +134,12 @@ namespace :scrape do
       agent.user_agent_alias = 'Linux Mozilla'
     end
 
+    puts "Scraping for data...." ; STDOUT.flush
+
     ('a'..'z').each do |char|
+      puts ""
+      print "L%02s\b\b\b" % char ; STDOUT.flush
+
       agent.
         get("#{GrSzBase}/datenbank/unternehmen/found/#{char}").
         search("ul.single-letter-list").search("li").each do |elem|
@@ -185,19 +201,8 @@ namespace :scrape do
             Investment.create(:entity        => investor,
                               :startup       => strtup,
                               :stake_percent => stake.sub(/\)/,''))
+          print "E.\b\b" ; STDOUT.flush
         end
-
-        puts "-"*30
-        puts "Name:   #{name}"
-        puts "Src:    #{src_url}"
-        puts "Logo:   #{logo_url}"
-        puts "Sector: #{sector}"
-        puts "Desc:   #{description}"
-        puts "Phone:  #{contact_data[:phone]}"
-        puts "Email:  #{contact_data[:email]}"
-        puts "Addres: #{contact_data[:addresse]}"
-        puts "Financ: #{finance_data}"
-        puts "Start:  #{founded}"
 
         page.search("div#team").search("li.head-list-item").map do |head|
           gruenderszene_link = GrSzBase +
@@ -207,13 +212,8 @@ namespace :scrape do
             head.search("img").attribute("src").to_s.
             sub(/\/thumb.php\?src=/,'').
             sub(/\&w=100\&h=132/,'')
-          role = head.search("div.head-information").search("p").last.text
 
-          puts ("+"*15) + " Employee " + ("+"*15)
-          puts "Name: #{name}"
-          puts "Link: #{gruenderszene_link}"
-          puts "Img:  #{image_url}"
-          puts "Role: #{role}"
+          role = head.search("div.head-information").search("p").last.text
 
           empl =
             Employee.where(:url => gruenderszene_link).first ||
@@ -225,9 +225,8 @@ namespace :scrape do
             KeyEmployee.create(:entity  => empl,
                                :startup => strtup,
                                :role    => role)
+          print "E+\b\b" ; STDOUT.flush
         end
-
-        # STDIN.gets
       end
     end
   end

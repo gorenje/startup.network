@@ -27,6 +27,7 @@ services:
       - DOCKER_ENV_STORE=/var/lib/srtupnet/env
     volumes:
       - srtupnetenv:/var/lib/srtupnet/env
+    restart: always
 
   srtupnet-migrate-db:
     build: .

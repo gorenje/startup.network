@@ -1,3 +1,4 @@
+- return if obj.data.nil?
 - if url = obj.data["email"]
   %a.m-5px.brad-100p.bgc-tan.d-fx.fxai-c.fxjc-c.c-white.w-25px.h-25px.bs-1{"data-icon" => "email2", :href => "mailto:#{url}", :title => "Send Email" }
 - if url = obj.data["profile-website"]
