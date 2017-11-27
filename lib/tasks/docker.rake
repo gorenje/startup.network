@@ -1,14 +1,11 @@
-#
-# Author: Gerrit Riessen, gerrit.riessen@wooga.com
-# Copyright (C) 2017 Gerrit Riessen
-# This code is licensed under the GNU Public License.
-#
-
 require 'net/ping'
 
-def latest_migration_version
-end
 namespace :docker do
+  def are_all_migrations_up?
+    ActiveRecord::Migrator.migrations_status(["."]).
+      map(&:first).all?{ |status| status == "up" }
+  end
+
   task :pause_for_db do
     host, port =ENV["DATABASE_URL"].split(/@/).last.split(/\//).first.split(/:/)
 
@@ -29,7 +26,7 @@ namespace :docker do
 
   task :if_db_not_migrated do
     begin
-      exit(ActiveRecord::Migrator.current_version == 0 || Entity.count == 0)
+      exit(!are_all_migrations_up? || Entity.count == 0)
     rescue
       exit(true)
     end
@@ -37,7 +34,7 @@ namespace :docker do
 
   task :if_db_is_migrated do
     begin
-      exit(ActiveRecord::Migrator.current_version > 0 && Entity.count > 0)
+      exit(are_all_migrations_up? && Entity.count > 0)
     rescue
       exit(false)
     end

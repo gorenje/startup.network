@@ -1,4 +1,4 @@
-class CreateSocialEntityLookup < ActiveRecord::Migration
+class CreateSocialEntityLookup < ActiveRecord::Migration[4.2]
   def change
     create_table :social_entity_lookups do |t|
       t.string :provider
