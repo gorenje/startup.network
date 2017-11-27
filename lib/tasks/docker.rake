@@ -34,7 +34,7 @@ namespace :docker do
 
   task :if_db_is_migrated do
     begin
-      exit(are_all_migrations_up? && Entity.count > 0)
+      exit(are_all_migrations_up?)
     rescue
       exit(false)
     end
